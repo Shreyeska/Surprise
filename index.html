@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Happy Birthday, Mayyaa! 🎉</title>
+    <title>
+      For you, Mayyaa... (Guess what I say to you a thousand times a day)
+    </title>
     <style>
       body {
         font-family: "Courier New", monospace;
@@ -86,11 +88,16 @@
   </head>
   <body>
     <div class="container">
-      <h1>🎂 Happy Birthday, Mayyaa! 🎂</h1>
+      <h1>To the one who fills my heart every day... 💖</h1>
+
       <p>Enter the secret code below to unlock your surprise! 🔐</p>
       <div class="terminal" id="terminal">
         <p>> Enter password: <span id="password-display">_</span></p>
       </div>
+      <p id="hint">
+        <strong>Hint #1:</strong> "It's something you obviously hear from me all
+        the time, but sure, act surprised when you figure it out." 😏
+      </p>
       <input
         type="text"
         id="password"
@@ -135,7 +142,8 @@
     </div>
 
     <script>
-      const secretCode = "love"; // You can change this to any secret word
+      const secretCode = "love";
+      let attempts = 0;
 
       function updateDisplay() {
         document.getElementById("password-display").innerText =
@@ -145,6 +153,7 @@
       function checkPassword() {
         let input = document.getElementById("password").value.toLowerCase();
         let message = document.getElementById("message");
+        let hint = document.getElementById("hint");
         let birthdayMessage = document.getElementById("birthday-message");
 
         if (input === secretCode) {
@@ -152,7 +161,19 @@
           birthdayMessage.classList.remove("hidden");
           startConfetti();
         } else {
-          message.innerHTML = "❌ Access Denied! Try again.";
+          attempts++;
+          if (attempts === 1) {
+            message.innerHTML = "❌ Access Denied! Try again.";
+            hint.innerHTML =
+              '🤔 *Hint #2:* "What’s the one thing I NEVER stop saying to you?" 🙄';
+          } else if (attempts === 2) {
+            message.innerHTML = "❌ Wrong again! Last hint...";
+            hint.innerHTML =
+              '🤦‍♀️ *Hint #3:* "It’s a four-letter word, starts with L, and I literally just said it in your birthday message..." 😂';
+          } else {
+            message.innerHTML =
+              "❌ Nope! I can't believe you don't know this. 😤";
+          }
         }
       }
 
