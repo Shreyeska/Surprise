@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday, Mayyaa! 🎉</title>
+    <style>
+      body {
+        font-family: "Courier New", monospace;
+        text-align: center;
+        background-color: #111;
+        color: #0f0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #222;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #0f0;
+      }
+      h1 {
+        color: #ffd700;
+      }
+      .terminal {
+        background: black;
+        color: #0f0;
+        padding: 15px;
+        text-align: left;
+        min-height: 150px;
+        border-radius: 5px;
+        font-size: 1.2em;
+      }
+      input {
+        font-size: 1em;
+        width: 80%;
+        padding: 10px;
+        margin-top: 10px;
+        background: black;
+        color: #0f0;
+        border: none;
+        border-bottom: 2px solid #0f0;
+        outline: none;
+        text-align: center;
+      }
+      button {
+        background: #0f0;
+        color: black;
+        font-size: 1em;
+        padding: 10px;
+        margin-top: 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      #confetti {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+      .hidden {
+        display: none;
+      }
+      #heart {
+        font-size: 1.5em;
+        margin-top: 20px;
+        color: red;
+        animation: heartbeat 1s infinite;
+      }
+      @keyframes heartbeat {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.3);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎂 Happy Birthday, Mayyaa! 🎂</h1>
+      <p>Enter the secret code below to unlock your surprise! 🔐</p>
+      <div class="terminal" id="terminal">
+        <p>> Enter password: <span id="password-display">_</span></p>
+      </div>
+      <input
+        type="text"
+        id="password"
+        placeholder="Type here..."
+        onkeyup="updateDisplay()"
+      />
+      <button onclick="checkPassword()">Submit</button>
+      <p id="message"></p>
+      <canvas id="confetti"></canvas>
+
+      <div id="birthday-message" class="hidden">
+        <h2>🥳 Happyy Happpy HAPPPPYYY Birthday maaayyaa 🎉</h2>
+        <p>I love you sooo sooo sooo much. 💖</p>
+        <p>
+          I know you said you didn't want to remember. But me not celebrating
+          you is absolutely unacceptable. 😤
+        </p>
+        <p>
+          I absolutelyyy lovee love love you and I am soo happy to have you in
+          my life. 💕
+        </p>
+        <p>Happy birthday, baby. I love you to the moon and back. 🌙✨</p>
+        <p>
+          💡 *Did you know?* You are my absolute **favorite human** in this
+          entire universe. If love was a programming language, you’d be my
+          **infinite loop**. 😉💻
+        </p>
+        <p>
+          🌟 **Every single day with you is special, but today is extra special
+          because it's YOUR day.** And I’ll always, always celebrate you. 😘
+        </p>
+        <p>
+          🥂 Here’s to another year of making memories, laughing at the silliest
+          things, and **me loving you more than you can ever imagine**.
+        </p>
+        <p>
+          So just sit back, relax, and let me shower you with all the love you
+          deserve. 🥰
+        </p>
+        <p id="heart">❤️</p>
+      </div>
+    </div>
+
+    <script>
+      const secretCode = "love"; // You can change this to any secret word
+
+      function updateDisplay() {
+        document.getElementById("password-display").innerText =
+          document.getElementById("password").value + "_";
+      }
+
+      function checkPassword() {
+        let input = document.getElementById("password").value.toLowerCase();
+        let message = document.getElementById("message");
+        let birthdayMessage = document.getElementById("birthday-message");
+
+        if (input === secretCode) {
+          message.innerHTML = "";
+          birthdayMessage.classList.remove("hidden");
+          startConfetti();
+        } else {
+          message.innerHTML = "❌ Access Denied! Try again.";
+        }
+      }
+
+      function startConfetti() {
+        const confettiCanvas = document.getElementById("confetti");
+        const ctx = confettiCanvas.getContext("2d");
+
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+
+        let confetti = [];
+        for (let i = 0; i < 100; i++) {
+          confetti.push({
+            x: Math.random() * confettiCanvas.width,
+            y: Math.random() * confettiCanvas.height,
+            r: Math.random() * 5 + 2,
+            d: Math.random() * 5 + 2,
+          });
+        }
+
+        function drawConfetti() {
+          ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+          confetti.forEach((c) => {
+            ctx.beginPath();
+            ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+            ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            ctx.fill();
+            c.y += c.d;
+            if (c.y > confettiCanvas.height) c.y = 0;
+          });
+          requestAnimationFrame(drawConfetti);
+        }
+
+        drawConfetti();
+      }
+    </script>
+  </body>
+</html>
